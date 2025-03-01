@@ -21,6 +21,38 @@ import edu.wpi.first.wpilibj.RobotBase;
  * (log replay from a file).
  */
 public final class Constants {
+
+  public static final class Controllers {
+    public static final int operator_controller_port = 2;
+  }
+
+  public static final class ArmConstants {
+    public static final int ARM_MOTOR_ID = 9;
+    public static final int ARM_MOTOR_CURRENT_LIMIT = 60;
+    public static final double ARM_MOTOR_VOLTAGE_COMP = 10;
+    public static final double ARM_SPEED_DOWN = 0.4;
+    public static final double ARM_SPEED_UP = -0.4;
+    public static final double ARM_HOLD_DOWN = 0.1;
+    public static final double ARM_HOLD_UP = -0.15;
+  }
+
+  public static final class RollerConstants {
+    public static final int ROLLER_MOTOR_ID = 10;
+    public static final int ROLLER_MOTOR_CURRENT_LIMIT = 60;
+    public static final double ROLLER_MOTOR_VOLTAGE_COMP = 10;
+    public static final double ROLLER_SLOW_SPEED_OUT = 0.1;
+    public static final double ROLLER_FAST_SPEED_OUT = 0.2;
+    public static final double ROLLER_SPEED_IN = -0.1;
+  }
+
+  public static final class ClimberConstants {
+    public static final int CLIMBER_MOTOR_ID = 1;
+    public static final double CLIMBER_SUPPLY = 50;
+    public static final double CLIMBER_STATOR = 50;
+    public static final double CLIMBER_SPEED_OUT = -0.6;
+    public static final double CLIMBER_SPEED_IN = 0.6;
+  }
+
   public static final Mode simMode = Mode.SIM;
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
 

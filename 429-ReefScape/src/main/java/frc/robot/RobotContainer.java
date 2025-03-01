@@ -20,11 +20,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.Constants;
 import frc.robot.commands.CharacterizationCommands;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.RollerSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -42,12 +46,39 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  public final EightBitDo m_operatorController =
+      new EightBitDo(Constants.Controllers.operator_controller_port);
   // Controller
   private final Ruffy leftRuffy = new Ruffy(0);
   private final Ruffy rightRuffy = new Ruffy(1);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
+
+  // Commands
+
+  public final ArmSubsystem m_arm = new ArmSubsystem();
+  public final RollerSubsystem m_roller = new RollerSubsystem();
+  public final Climber m_climber = new Climber();
+
+  public Command armUpCommand =
+      new InstantCommand(() -> m_arm.runArm(Constants.ArmConstants.ARM_SPEED_UP));
+  public Command armDownCommand =
+      new InstantCommand(() -> m_arm.runArm(Constants.ArmConstants.ARM_SPEED_DOWN));
+  public Command rollerInCommand =
+      new InstantCommand(() -> m_roller.runRoller(Constants.RollerConstants.ROLLER_SPEED_IN));
+  public Command rollerSlowOutCommand =
+      new InstantCommand(() -> m_roller.runRoller(Constants.RollerConstants.ROLLER_SLOW_SPEED_OUT));
+  public Command rollerFastOutCommand =
+      new InstantCommand(() -> m_roller.runRoller(Constants.RollerConstants.ROLLER_FAST_SPEED_OUT));
+  public Command climberWinchIn =
+      new InstantCommand(() -> m_climber.runClimber(Constants.ClimberConstants.CLIMBER_SPEED_IN));
+  public Command climberWinchOut =
+      new InstantCommand(() -> m_climber.runClimber(Constants.ClimberConstants.CLIMBER_SPEED_OUT));
+
+  public Command climberStopCommand = new InstantCommand(() -> m_climber.stopClimber());
+  public Command armStopCommand = new InstantCommand(() -> m_arm.stopArm());
+  public Command rollerStopCommand = new InstantCommand(() -> m_roller.stopRoller());
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -134,6 +165,16 @@ public class RobotContainer {
                 () -> drive.setPose(new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                 drive)
             .ignoringDisable(true));
+
+    m_operatorController.rb.whileTrue(armUpCommand).onFalse(armStopCommand);
+    m_operatorController.lb.whileTrue(armDownCommand).onFalse(armStopCommand);
+
+    m_operatorController.y.whileTrue(rollerInCommand).onFalse(rollerStopCommand);
+    m_operatorController.b.whileTrue(rollerSlowOutCommand).onFalse(rollerStopCommand);
+    m_operatorController.a.whileTrue(rollerFastOutCommand).onFalse(rollerStopCommand);
+
+    m_operatorController.povUp.whileTrue(climberWinchIn).onFalse(climberStopCommand);
+    m_operatorController.povDown.whileTrue(climberWinchOut).onFalse(climberStopCommand);
   }
 
   /**
