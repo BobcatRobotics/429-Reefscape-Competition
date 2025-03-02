@@ -29,7 +29,7 @@ public class ArmSubsystem extends SubsystemBase {
     config.CurrentLimits.SupplyCurrentLimitEnable = true;
     config.CurrentLimits.SupplyCurrentLimit = ArmConstants.ARM_MOTOR_CURRENT_LIMIT;
     config.CurrentLimits.StatorCurrentLimitEnable = true;
-    config.CurrentLimits.StatorCurrentLimit = 40;
+    config.CurrentLimits.StatorCurrentLimit = ArmConstants.ARM_MOTOR_STATOR_CURRENT_LIMIT;
 
     config.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.25; // TODO tune this
     armMotor.getConfigurator().apply(config);
