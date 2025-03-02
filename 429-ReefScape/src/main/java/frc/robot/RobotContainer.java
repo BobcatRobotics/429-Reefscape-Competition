@@ -65,6 +65,7 @@ public class RobotContainer {
 
   public Command armUpCommand =
       new InstantCommand(() -> m_arm.runArm(Constants.ArmConstants.ARM_SPEED_UP));
+  public Command armHoldCommand = new InstantCommand(() -> m_arm.runArm(-.05));
   public Command armDownCommand =
       new InstantCommand(() -> m_arm.runArm(Constants.ArmConstants.ARM_SPEED_DOWN));
   public Command rollerInCommand =
