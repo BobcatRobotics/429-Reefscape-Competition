@@ -15,13 +15,18 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
 
     // Set up the arm motor as a brushed motor
-    String Busname = "";
-    armMotor = new TalonFX(ArmConstants.ARM_MOTOR_ID, Busname);
+    armMotor = new TalonFX(ArmConstants.ARM_MOTOR_ID);
 
-    TalonFXConfiguration Config = new TalonFXConfiguration();
-    Config.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
-    Config.MotorOutput.withNeutralMode(NeutralModeValue.Brake);
-    Config.CurrentLimits.withSupplyCurrentLimit(ArmConstants.ARM_MOTOR_CURRENT_LIMIT);
+    TalonFXConfiguration config = new TalonFXConfiguration();
+    config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    //    config.CurrentLimits.withSupplyCurrentLimit(ArmConstants.ARM_MOTOR_CURRENT_LIMIT); dont do
+    // this, it doesnt actually assign the value to the config
+    // use this instead
+    config.CurrentLimits.SupplyCurrentLimitEnable = true;
+    config.CurrentLimits.SupplyCurrentLimit = ArmConstants.ARM_MOTOR_CURRENT_LIMIT;
+    config.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.25; // TODO tune this
+    armMotor.getConfigurator().apply(config);
   }
 
   @Override

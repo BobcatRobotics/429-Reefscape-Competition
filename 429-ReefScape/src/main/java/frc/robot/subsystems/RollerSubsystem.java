@@ -15,13 +15,16 @@ public class RollerSubsystem extends SubsystemBase {
   public RollerSubsystem() {
 
     // Set up the roller motor as a brushed motor
-    String Busname = "";
-    rollerMotor = new TalonFX(RollerConstants.ROLLER_MOTOR_ID, Busname);
+    // String Busname = ""; you dont need this, it defaults to ""
+    rollerMotor = new TalonFX(RollerConstants.ROLLER_MOTOR_ID);
 
-    TalonFXConfiguration Config = new TalonFXConfiguration();
-    Config.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
-    Config.MotorOutput.withNeutralMode(NeutralModeValue.Brake);
-    Config.CurrentLimits.withSupplyCurrentLimit(RollerConstants.ROLLER_MOTOR_CURRENT_LIMIT);
+    TalonFXConfiguration config = new TalonFXConfiguration();
+    config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    config.CurrentLimits.SupplyCurrentLimitEnable = true;
+    config.CurrentLimits.SupplyCurrentLimit = RollerConstants.ROLLER_MOTOR_CURRENT_LIMIT;
+    // you need to actually tell the motor to use the config
+    rollerMotor.getConfigurator().apply(config);
   }
 
   @Override
