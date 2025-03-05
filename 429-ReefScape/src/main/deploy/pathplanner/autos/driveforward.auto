@@ -19,13 +19,43 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "armout"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "stopouttake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "armin"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stoparm"
           }
         }
       ]

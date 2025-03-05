@@ -4,19 +4,18 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
   private final TalonFX armMotor;
-  //private final DigitalInput armSwitchPressed;
+  // private final DigitalInput armSwitchPressed;
 
   /** This subsytem that controls the arm. */
   public ArmSubsystem() {
     // Set up a new digital input (for the limit switch)
-    //armSwitchPressed = new DigitalInput(ArmConstants.ARM_SWITCH_PORT);
+    // armSwitchPressed = new DigitalInput(ArmConstants.ARM_SWITCH_PORT);
     // Set up the arm motor as a brushed motor
     armMotor = new TalonFX(ArmConstants.ARM_MOTOR_ID);
 
