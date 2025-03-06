@@ -65,7 +65,7 @@ public class RobotContainer {
 
   public Command armUpCommand =
       new InstantCommand(() -> m_arm.runArm(Constants.ArmConstants.ARM_SPEED_UP));
-  public Command armHoldCommand = new InstantCommand(() -> m_arm.runArm(-.05));
+  // public Command armHoldCommand = new InstantCommand(() -> m_arm.runArm(-.05));
   public Command armDownCommand =
       new InstantCommand(() -> m_arm.runArm(Constants.ArmConstants.ARM_SPEED_DOWN));
   public Command rollerInCommand =
@@ -124,6 +124,9 @@ public class RobotContainer {
     // Set up namedCommands
     NamedCommands.registerCommand("outtake", rollerSlowOutCommand);
     NamedCommands.registerCommand("stopouttake", rollerStopCommand);
+    NamedCommands.registerCommand("armout", armDownCommand);
+    NamedCommands.registerCommand("armin", armUpCommand);
+    NamedCommands.registerCommand("stoparm", armStopCommand);
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
@@ -146,6 +149,7 @@ public class RobotContainer {
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
     autoChooser.addOption("Drive Forward", new PathPlannerAuto("driveforward"));
+    autoChooser.addOption("Side to HP", new PathPlannerAuto("side"));
 
     // Configure the button bindings
     configureButtonBindings();
