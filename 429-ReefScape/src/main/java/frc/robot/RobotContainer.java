@@ -23,9 +23,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.Constants;
-import frc.robot.commands.CharacterizationCommands;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ArmSubsystem;
@@ -131,25 +129,27 @@ public class RobotContainer {
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Set up SysId routines
-    autoChooser.addOption(
-        "Drive Wheel Radius Characterization",
-        CharacterizationCommands.wheelRadiusCharacterization(drive));
-    autoChooser.addOption(
-        "Drive Simple FF Characterization",
-        CharacterizationCommands.feedforwardCharacterization(drive));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Forward)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Reverse)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-
+    /*
+        autoChooser.addOption(
+            "Drive Wheel Radius Characterization",
+            CharacterizationCommands.wheelRadiusCharacterization(drive));
+        autoChooser.addOption(
+            "Drive Simple FF Characterization",
+            CharacterizationCommands.feedforwardCharacterization(drive));
+        autoChooser.addOption(
+            "Drive SysId (Quasistatic Forward)",
+            drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+            "Drive SysId (Quasistatic Reverse)",
+            drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        autoChooser.addOption(
+            "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+            "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    */
     autoChooser.addOption("Drive Forward", new PathPlannerAuto("driveforward"));
-    autoChooser.addOption("Side to HP", new PathPlannerAuto("side"));
+    autoChooser.addOption("Side", new PathPlannerAuto("side"));
+    autoChooser.addOption("Slolam", new PathPlannerAuto("slolam"));
 
     // Configure the button bindings
     configureButtonBindings();
